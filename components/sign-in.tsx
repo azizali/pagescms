@@ -32,7 +32,7 @@ export function SignIn() {
   const getErrorMessage = (value: string) => {
     if (value.toLowerCase() !== "unable_to_get_user_info") return value;
     return [
-      "GitHub denied profile access. Re-authorize Pages CMS in GitHub Settings > Applications > Authorized GitHub Apps / Authorized OAuth Apps, then try again.",
+      "GitHub denied profile access. Re-authorize MarkoCMS in GitHub Settings > Applications > Authorized GitHub Apps / Authorized OAuth Apps, then try again.",
       "https://github.com/settings/applications",
     ].join(" ");
   };
@@ -178,7 +178,7 @@ export function SignIn() {
         ) : (
           <div className="space-y-6">
             <h1 className="text-lg font-medium tracking-tight text-center">
-              Sign in to Pages CMS
+              Sign in to MarkoCMS
             </h1>
             <Button
               type="button"
