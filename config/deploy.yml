@@ -30,6 +30,7 @@ env:
     NODE_ENV: production
     PORT: "3000"
     BASE_URL: https://cms.ilovecoding.org
+    EMAIL_PROVIDER: resend
   secret:
     - DATABASE_URL
     - BETTER_AUTH_SECRET
@@ -41,6 +42,8 @@ env:
     - GITHUB_APP_WEBHOOK_SECRET
     - GITHUB_APP_CLIENT_ID
     - GITHUB_APP_CLIENT_SECRET
+    - EMAIL_FROM
+    - RESEND_API_KEY
 
 ssh:
   user: root
