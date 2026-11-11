@@ -50,7 +50,8 @@ async function main() {
       checks: "read",
       statuses: "read",
       contents: "write",
-      email_addresses: "read",
+      // email_addresses (account permission) is rejected by the manifest flow; add it in the app's settings:
+      // Permissions & events > Account permissions > Email addresses: Read-only.
       metadata: "read",
     },
     default_events: [
@@ -69,7 +70,7 @@ async function main() {
     hook_attributes: {
       url: webhookUrl,
       active: true,
-      secret: webhookSecret,
+      // GitHub's manifest format rejects "secret"; set the webhook secret in the app's settings afterwards.
     },
   };
 

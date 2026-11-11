@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+.github
+.kamal
+.env*
+!.env.local.example
+*.pem
+.DS_Store

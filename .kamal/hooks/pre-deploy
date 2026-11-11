@@ -1,0 +1,8 @@
+#!/bin/sh
+# Migrations as a release step, run from the deploying machine in the just-pushed image, before containers start.
+# A failed migration stops the deploy and the old version keeps serving. Image name repeats config/deploy.yml.
+set -e
+docker run --rm --pull always \
+  -e DATABASE_URL \
+  "ghcr.io/azizali/pagescms:${KAMAL_VERSION}" \
+  npx drizzle-kit migrate

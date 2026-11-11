@@ -1,0 +1,51 @@
+# Pages CMS on the shared VPS. Kamal 2, run from the repo root: `kamal deploy`.
+# Shares kamal-proxy (ports 80/443) with any other Kamal service on this server; routing is by host.
+service: pagescms
+image: azizali/pagescms
+
+servers:
+  web:
+    hosts: [2.24.69.111]
+
+proxy:
+  ssl: true
+  host: cms.ilovecoding.org
+  app_port: 3000
+  healthcheck:
+    path: /
+    interval: 3
+    timeout: 5
+
+registry:
+  server: ghcr.io
+  username: azizali
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  arch: amd64
+
+env:
+  clear:
+    NODE_ENV: production
+    PORT: "3000"
+    BASE_URL: https://cms.ilovecoding.org
+  secret:
+    - DATABASE_URL
+    - BETTER_AUTH_SECRET
+    - CRYPTO_KEY
+    - ADMIN_EMAILS
+    - GITHUB_APP_ID
+    - GITHUB_APP_NAME
+    - GITHUB_APP_PRIVATE_KEY
+    - GITHUB_APP_WEBHOOK_SECRET
+    - GITHUB_APP_CLIENT_ID
+    - GITHUB_APP_CLIENT_SECRET
+
+ssh:
+  user: root
+
+logging:
+  options:
+    max-size: 10m
+    max-file: "5"

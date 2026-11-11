@@ -1,0 +1,19 @@
+#!/bin/sh
+# Runs Kamal in Docker (nothing to install). Usage from the repo root:  bin/kamal setup | deploy | app logs ...
+# Loads .env.production for the secrets, and forwards your SSH agent (Docker Desktop on macOS).
+set -e
+cd "$(dirname "$0")/.."
+set -a; [ -f .env.production ] && . ./.env.production; set +a
+if [ "$(uname)" = "Darwin" ]; then
+  SSH_SOCK=/run/host-services/ssh-auth.sock
+else
+  SSH_SOCK="$SSH_AUTH_SOCK"
+fi
+exec docker run --rm -it \
+  -v "$PWD:/workdir" \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v "$SSH_SOCK:/ssh-agent" -e SSH_AUTH_SOCK=/ssh-agent \
+  -e KAMAL_REGISTRY_PASSWORD -e DATABASE_URL -e BETTER_AUTH_SECRET -e CRYPTO_KEY -e ADMIN_EMAILS \
+  -e GITHUB_APP_ID -e GITHUB_APP_NAME -e GITHUB_APP_PRIVATE_KEY -e GITHUB_APP_WEBHOOK_SECRET \
+  -e GITHUB_APP_CLIENT_ID -e GITHUB_APP_CLIENT_SECRET \
+  ghcr.io/basecamp/kamal:latest "$@"
